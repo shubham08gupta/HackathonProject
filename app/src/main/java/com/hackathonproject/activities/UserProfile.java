@@ -52,11 +52,11 @@ public class UserProfile extends AppCompatActivity {
                 DatabaseReference mDatabase =
                         FirebaseDatabase.getInstance().getReference();
 
-                User user = new User();
-                user.setEmail("shubham@gupta.com");
-                user.setName("Shubham");
-                user.setPhone("26346234234");
-                user.setUrl("http://media.marine-products.com/media/catalog/product/cache/1/small_image/295x295/9df78eab33525d08d6e5fb8d27136e95/2/1/218-ws1gr.jpg");
+//                User user = new User();
+//                user.setEmail("shubham@gupta.com");
+//                user.setName("Shubham");
+//                user.setPhone("26346234234");
+//                user.setUrl("http://media.marine-products.com/media/catalog/product/cache/1/small_image/295x295/9df78eab33525d08d6e5fb8d27136e95/2/1/218-ws1gr.jpg");
 
 //                mDatabase.
             }
