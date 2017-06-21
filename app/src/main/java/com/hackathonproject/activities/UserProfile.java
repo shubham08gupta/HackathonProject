@@ -7,13 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hackathonproject.R;
 import com.hackathonproject.models.User;
 
@@ -21,10 +26,11 @@ public class UserProfile extends AppCompatActivity {
 
 
     private static final int READ_CONTACTS_REQUEST_CODE = 789;
+    private static final String TAG = UserProfile.class.getSimpleName();
     private ImageView mUserImage;
     private EditText mUserName;
     private Button mSubmit;
-
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,8 @@ public class UserProfile extends AppCompatActivity {
         mUserImage = (ImageView) findViewById(R.id.iv_user_image);
         mSubmit = (Button) findViewById(R.id.submit);
 
-
+        mDatabase =
+                FirebaseDatabase.getInstance().getReference();
         setListeners();
     }
 
@@ -49,18 +56,31 @@ public class UserProfile extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference mDatabase =
-                        FirebaseDatabase.getInstance().getReference();
-
-//                User user = new User();
-//                user.setEmail("shubham@gupta.com");
-//                user.setName("Shubham");
-//                user.setPhone("26346234234");
-//                user.setUrl("http://media.marine-products.com/media/catalog/product/cache/1/small_image/295x295/9df78eab33525d08d6e5fb8d27136e95/2/1/218-ws1gr.jpg");
-
-//                mDatabase.
+                User user = new User("dummy", "dummy@gmail.com", "9876543210", "adsnad", "tag1", 28.5930586, 77.2002744);
+                mDatabase.child("User").child("dummy@gmail.com").setValue(user);
             }
         });
+
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                User post = dataSnapshot.getValue(User.class);
+                Toast.makeText(UserProfile.this, "Added", Toast.LENGTH_SHORT).show();
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Toast.makeText(UserProfile.this, "Some problem", Toast.LENGTH_SHORT).show();
+                // ...
+            }
+        };
+
+        mDatabase.addValueEventListener(postListener);
     }
 
     private void askPermission() {
