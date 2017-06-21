@@ -36,7 +36,15 @@
             android:id="@+id/et_user_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/user_phone" />
+            android:hint="@string/user_phone"
+            android:inputType="number"
+            android:maxLength="10" />
+
+        <EditText
+            android:id="@+id/et_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tag" />
 
         <Button
             android:id="@+id/submit"

@@ -12,4 +12,5 @@
     <string name="user_email">Enter your email</string>
     <string name="user_phone">Enter your phone</string>
     <string name="submit">Submit</string>
+    <string name="tag">Enter your profession</string>
 </resources>

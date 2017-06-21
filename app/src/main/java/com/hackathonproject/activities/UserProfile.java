@@ -1,6 +1,7 @@
 package com.hackathonproject.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,7 +29,7 @@ public class UserProfile extends AppCompatActivity {
     private static final int READ_CONTACTS_REQUEST_CODE = 789;
     private static final String TAG = UserProfile.class.getSimpleName();
     private ImageView mUserImage;
-    private EditText mUserName;
+    private EditText mUserName, mUserPhone, mUserEmail, mUserTag;
     private Button mSubmit;
     private DatabaseReference mDatabase;
 
@@ -40,8 +41,14 @@ public class UserProfile extends AppCompatActivity {
         mUserImage = (ImageView) findViewById(R.id.iv_user_image);
         mSubmit = (Button) findViewById(R.id.submit);
 
+        mUserName = (EditText) findViewById(R.id.et_user_name);
+        mUserPhone = (EditText) findViewById(R.id.et_user_phone);
+        mUserEmail = (EditText) findViewById(R.id.et_user_email);
+        mUserTag = (EditText) findViewById(R.id.et_tag);
+
         mDatabase =
                 FirebaseDatabase.getInstance().getReference();
+
         setListeners();
     }
 
@@ -56,8 +63,15 @@ public class UserProfile extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User user = new User("dummy", "dummy@gmail.com", "9876543210", "adsnad", "tag1", 28.5930586, 77.2002744);
-                mDatabase.child("User").child("dummy@gmail.com").setValue(user);
+                User user = new User(mUserName.getText().toString().trim(),
+                        mUserEmail.getText().toString().trim(),
+                        mUserPhone.getText().toString().trim(),
+                        "http://www.platform505.com/wp-content/uploads/Sample-stamp-by-Stuart-Miles_edited-1.jpg",
+                        mUserTag.getText().toString().trim(),
+                        28.5930586,
+                        77.2002744);
+
+                mDatabase.child("User").child(mUserEmail.getText().toString().trim().replace(".", "@")).setValue(user);
             }
         });
 
@@ -66,8 +80,10 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                User post = dataSnapshot.getValue(User.class);
-                Toast.makeText(UserProfile.this, "Added", Toast.LENGTH_SHORT).show();
+                User user = dataSnapshot.getValue(User.class);
+                Toast.makeText(UserProfile.this, "Added user", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(UserProfile.this, MainActivity.class);
+                startActivity(i);
                 // ...
             }
 

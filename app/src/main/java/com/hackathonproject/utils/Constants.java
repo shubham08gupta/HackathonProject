@@ -8,4 +8,5 @@ public final class Constants {
     public static final String END_TIME_MINUTE = "END_TIME_MINUTE";
     public static final String SLOT_INTERVAL = "SLOT_INTERVAL";
     public static final String IS_LOGIN = "is_login";
+    public static final String FIREBASE_LINK = "https://hackathon-cb7bb.firebaseio.com/";
 }
