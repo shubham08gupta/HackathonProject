@@ -8,4 +8,8 @@
     <string name="invitation_cta">Call to action</string>
     <string name="invitation_title">Friendly Chat Invite</string>
     <string name="sign_in">Sign In</string>
+    <string name="user_name">Enter your name</string>
+    <string name="user_email">Enter your email</string>
+    <string name="user_phone">Enter your phone</string>
+    <string name="submit">Submit</string>
 </resources>
